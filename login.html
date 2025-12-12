@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<link rel="stylesheet" href="styles/styles.css">
+
+<script src="scripts/database.js"></script>
+<script src="scripts/navigation.js"></script>
+<script src="scripts/auth.js"></script>
+</head>
+<body>
+
+<div class="login-wrapper">
+    <div class="login-card">
+
+        <h2 class="login-title">Login</h2>
+        <p class="login-subtitle">Ingresa tus datos para continuar</p>
+
+        <div class="input-group">
+            <input type="text" id="user" class="input-field" placeholder="Usuario">
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="pass" class="input-field" placeholder="Contraseña">
+        </div>
+
+        <button class="btn primary full"
+            onclick="login(
+                document.getElementById('user').value,
+                document.getElementById('pass').value
+            )">
+            Ingresar
+        </button>
+
+        <button class="btn secondary full" onclick="goTo('index.html')">
+            Volver
+        </button>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Panel Soporte</title>
+
+<link rel="stylesheet" href="styles/styles.css">
+<script src="scripts/database.js"></script>
+<script src="scripts/navigation.js"></script>
+<script src="scripts/auth.js"></script>
+
+<script>
+function cargarHijos() {
+    const db = loadDB();
+    const cont = document.getElementById('hijosSoporte');
+    cont.innerHTML = '';
+
+    db.usuarios
+      .filter(u => u.rol === 'hijo')
+      .forEach(hijo => {
+          const div = document.createElement('div');
+          div.className = "support-child-card";
+
+          const name = document.createElement('span');
+          name.textContent = hijo.nombre;
+
+          const btn = document.createElement('button');
+          btn.className = "btn primary";
+          btn.textContent = "Abrir chat";
+          btn.onclick = () => {
+              localStorage.setItem('currentChat', hijo.id);
+              goTo('chat.html');
+          };
+
+          div.appendChild(name);
+          div.appendChild(btn);
+          cont.appendChild(div);
+      });
+}
+
+window.onload = cargarHijos;
+</script>
+
+<style>
+/* Tarjetas de hijos para soporte */
+.support-child-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #dce3ea;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    font-size: 15px;
+}
+
+/* Bloque informativo */
+.support-info {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 20px;
+    border: 1px solid #dce3ea;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.support-info h3 {
+    margin-top: 0;
+    color: #003459;
+}
+
+.support-info ul {
+    padding-left: 18px;
+    line-height: 1.6;
+}
+</style>
+
+</head>
+<body>
+
+<div class="main-wrapper">
+
+  <div class="dashboard-card">
+
+    <h2 class="login-title">Panel de Soporte</h2>
+    <p class="login-subtitle">Selecciona a un niño para interactuar y brindarle asistencia</p>
+
+    <div id="hijosSoporte"></div>
+
+    <button class="btn secondary full" onclick="logout()">Cerrar Sesión</button>
+
+    <!-- MATERIAL DE APOYO PARA PERSONAL DE SOPORTE -->
+    <div class="support-info">
+      <h3>📘 Material de apoyo: Cómo ayudar a niños que sufren bullying</h3>
+
+      <p>
+        El personal de soporte juega un papel fundamental en el bienestar emocional de los niños.
+        A continuación encontrarás una guía práctica y validada para ayudar en situaciones donde el menor
+        se encuentra afectado por acoso escolar.
+      </p>
+
+      <h4>1️⃣ Señales comunes de que un niño está sufriendo bullying</h4>
+      <ul>
+        <li>Cambios repentinos de comportamiento.</li>
+        <li>Aislamiento social o silencio constante.</li>
+        <li>Evita hablar del colegio o de ciertos compañeros.</li>
+        <li>Ansiedad, tristeza o irritabilidad.</li>
+        <li>Disminución del rendimiento escolar.</li>
+      </ul>
+
+      <h4>2️⃣ Cómo hablar con un niño afectado</h4>
+      <ul>
+        <li>Escucha sin interrumpir y valida sus emociones.</li>
+        <li>Evita minimizar lo que siente. Frases como "no es para tanto" pueden empeorar su estado.</li>
+        <li>Dile claramente que no es su culpa.</li>
+        <li>Pregunta con suavidad qué ha pasado y cómo se ha sentido.</li>
+        <li>Hazle saber que no está solo y que será protegido.</li>
+      </ul>
+
+      <h4>3️⃣ Acciones recomendadas para el personal de soporte</h4>
+      <ul>
+        <li>Registrar los incidentes para hacer seguimiento.</li>
+        <li>Notificar a los padres o responsables cuando sea necesario.</li>
+        <li>Proponer estrategias de afrontamiento: respiración, expresión emocional, pedir ayuda.</li>
+        <li>Supervisar si el bullying ocurre en grupos de chat, recreo o clases.</li>
+        <li>Fomentar entornos de confianza donde los niños puedan expresarse libremente.</li>
+      </ul>
+
+      <h4>4️⃣ Qué nunca debe hacer un encargado</h4>
+      <ul>
+        <li>No culpar al niño por lo ocurrido.</li>
+        <li>No obligarlo a enfrentar solo al agresor.</li>
+        <li>No divulgar lo que contó sin necesidad.</li>
+        <li>No ignorar pequeñas señales (el bullying siempre escala).</li>
+      </ul>
+
+      <h4>5️⃣ Frases útiles para consolar y orientar</h4>
+      <ul>
+        <li>“Lo que te pasó es injusto, y estoy aquí para ayudarte.”</li>
+        <li>“No estás solo, puedes hablar conmigo cuando lo necesites.”</li>
+        <li>“Tu vida y tus emociones son importantes.”</li>
+        <li>“Vamos a buscar juntos una solución segura.”</li>
+      </ul>
+
+      <p>
+        Recuerda: el objetivo del personal de soporte es acompañar, escuchar y fortalecer emocionalmente al niño,
+        además de documentar y dar seguimiento a cualquier caso de acoso.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Registro Hijo</title>
+
+<link rel="stylesheet" href="styles/styles.css">
+<script src="scripts/database.js"></script>
+<script src="scripts/navigation.js"></script>
+
+<script>
+function registerHijo() {
+    const nombre = document.getElementById('nombre').value.trim();
+    const usuario = document.getElementById('usuario').value.trim();
+    const pass = document.getElementById('pass').value.trim();
+    const idPadre = document.getElementById('padre').value;
+
+    if (!nombre || !usuario || !pass || !idPadre) {
+        alert('Completa todos los campos');
+        return;
+    }
+
+    let db = loadDB();
+
+    const hijo = {
+        id: Date.now(),
+        rol: 'hijo',
+        nombre: nombre,
+        usuario: usuario,
+        pass: pass,
+        padre: parseInt(idPadre)
+    };
+
+    db.usuarios.push(hijo);
+
+    const padre = db.usuarios.find(u => u.id == idPadre);
+    if (padre) {
+        if (!Array.isArray(padre.hijos)) padre.hijos = [];
+        padre.hijos.push(hijo.id);
+    }
+
+    saveDB(db);
+
+    alert('Hijo registrado correctamente');
+    goTo('login.html');
+}
+
+function cargarPadres() {
+    const select = document.getElementById('padre');
+    const db = loadDB();
+
+    select.innerHTML = `<option value="">Selecciona un padre</option>`;
+
+    db.usuarios
+      .filter(u => u.rol === 'padre')
+      .forEach(p => {
+          const option = document.createElement('option');
+          option.value = p.id;
+          option.textContent = p.nombre;
+          select.appendChild(option);
+      });
+}
+
+window.addEventListener('DOMContentLoaded', cargarPadres);
+</script>
+</head>
+<body>
+
+<div class="main-wrapper">
+  <div class="login-card">
+    <h2 class="login-title">Registro de Hijo</h2>
+    <p class="login-subtitle">Completa los datos del hijo</p>
+
+    <div class="input-group">
+      <input type="text" id="nombre" class="input-field" placeholder="Nombre">
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="usuario" class="input-field" placeholder="Usuario">
+    </div>
+
+    <div class="input-group">
+      <input type="password" id="pass" class="input-field" placeholder="Contraseña">
+    </div>
+
+    <div class="input-group">
+      <select id="padre" class="input-field">
+        <option value="">Cargando padres...</option>
+      </select>
+    </div>
+
+    <button class="btn primary full" onclick="registerHijo()">Registrar</button>
+    <button class="btn secondary full" onclick="goTo('index.html')">Volver</button>
+  </div>
+</div>
+
+</body>
+</html>

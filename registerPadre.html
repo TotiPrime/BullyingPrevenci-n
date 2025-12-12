@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Registro Padre</title>
+
+<link rel="stylesheet" href="styles/styles.css">
+<script src="scripts/database.js"></script>
+<script src="scripts/navigation.js"></script>
+
+<script>
+function registerPadre() {
+    const nombre = document.getElementById('nombre').value.trim();
+    const usuario = document.getElementById('usuario').value.trim();
+    const pass = document.getElementById('pass').value.trim();
+
+    if (!nombre || !usuario || !pass) {
+        alert('Completa todos los campos');
+        return;
+    }
+
+    let db = loadDB();
+
+    db.usuarios.push({
+        id: Date.now(),
+        rol: 'padre',
+        nombre: nombre,
+        usuario: usuario,
+        pass: pass,
+        hijos: []
+    });
+
+    saveDB(db);
+
+    alert('Padre registrado correctamente');
+    goTo('login.html');
+}
+</script>
+</head>
+<body>
+
+<div class="main-wrapper">
+  <div class="login-card">
+    <h2 class="login-title">Registro de Padre</h2>
+    <p class="login-subtitle">Crea una cuenta tipo padre</p>
+
+    <div class="input-group">
+      <input type="text" id="nombre" class="input-field" placeholder="Nombre">
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="usuario" class="input-field" placeholder="Usuario">
+    </div>
+
+    <div class="input-group">
+      <input type="password" id="pass" class="input-field" placeholder="Contraseña">
+    </div>
+
+    <button class="btn primary full" onclick="registerPadre()">Registrar</button>
+    <button class="btn secondary full" onclick="goTo('index.html')">Volver</button>
+  </div>
+</div>
+
+</body>
+</html>

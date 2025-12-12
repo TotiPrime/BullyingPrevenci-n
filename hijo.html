@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel Hijo - Prevención de Bullying</title>
+  <link rel="stylesheet" href="styles/styles.css">
+  <script src="scripts/navigation.js"></script>
+  <script src="scripts/auth.js"></script>
+  <script>
+    function hablarSoporte(){
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      if(!user || user.rol !== 'hijo') goTo('index.html');
+      localStorage.setItem('currentChat', user.id);
+      goTo('chat.html');
+    }
+  </script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f4f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-width: 700px;
+      width: 100%;
+      padding: 30px;
+    }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+    p {
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    .buttons {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px 5px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .btn-soporte {
+      background-color: #f1c40f;
+      color: #000;
+    }
+    .btn-soporte:hover {
+      background-color: #f39c12;
+    }
+    .btn-logout {
+      background-color: #e67e22;
+      color: #fff;
+    }
+    .btn-logout:hover {
+      background-color: #d35400;
+    }
+    details {
+      background: #ecf0f1;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      padding: 10px 15px;
+    }
+    summary {
+      font-weight: bold;
+      font-size: 18px;
+      cursor: pointer;
+      outline: none;
+    }
+    ul, ol {
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+    blockquote {
+      font-style: italic;
+      margin: 10px 0;
+      padding-left: 15px;
+      border-left: 3px solid #3498db;
+    }
+    footer {
+      text-align: center;
+      padding: 15px;
+      background: #dfe6e9;
+      font-size: 14px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>💬 Panel de Ayuda contra el Bullying</h1>
+      <p>Este espacio es seguro y confidencial. Aquí puedes hablar con el equipo de soporte si estás pasando por una situación de bullying o necesitas orientación.</p>
+
+      <div class="buttons">
+        <button class="btn-soporte" onclick="hablarSoporte()">🟨 Hablar con Soporte</button>
+        <button class="btn-logout" onclick="logout()">🟧 Cerrar Sesión</button>
+      </div>
+
+      <details>
+        <summary>🌱 Consejos para afrontar el bullying</summary>
+        <ul>
+          <li>No respondas con violencia, mantén la calma.</li>
+          <li>Habla con alguien de confianza: padres, maestros o amigos.</li>
+          <li>Guarda pruebas (mensajes, capturas) si el bullying es digital.</li>
+          <li>Recuerda que no es tu culpa, el problema está en el agresor.</li>
+          <li>Busca actividades que te hagan sentir bien y fortalezcan tu autoestima.</li>
+        </ul>
+      </details>
+
+      <details>
+        <summary>💡 Maneras de reaccionar</summary>
+        <ol>
+          <li>Alejarte del lugar o persona que te incomoda.</li>
+          <li>Decir con firmeza: “No me hables así” o “No me gusta lo que haces”.</li>
+          <li>Buscar apoyo inmediato en un adulto cercano.</li>
+          <li>Usar este panel para conversar con soporte y recibir ayuda.</li>
+        </ol>
+      </details>
+
+      <details>
+        <summary>💖 Mensajes motivacionales</summary>
+        <blockquote>“Eres más fuerte de lo que piensas.”</blockquote>
+        <blockquote>“Tus emociones, aunque intensas, también son válidas.”</blockquote>
+        <blockquote>“Tu voz importa, nunca tengas miedo de usarla.”</blockquote>
+      </details>
+
+      <details>
+        <summary>📚 Recursos de apoyo</summary>
+        <ul>
+          <li><a href="https://www.unicef.org/es/end-violence" target="_blank">UNICEF: Fin al bullying</a></li>
+          <li><a href="https://www.educaciontrespuntocero.com/recursos/acoso-escolar-o-bullying/" target="_blank">StopBullying.gov</a></li>
+        </ul>
+      </details>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Sistema de Prevención de Bullying | Apoyo y acompañamiento
+  </footer>
+</body>
+</html>

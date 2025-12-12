@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Panel Padre</title>
+<link rel="stylesheet" href="styles/styles.css">
+<script src="scripts/database.js"></script>
+<script src="scripts/navigation.js"></script>
+<script src="scripts/auth.js"></script>
+<style>
+  /* Estilos mínimos para visualizar mejor las secciones nuevas */
+  .grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .section { background: #f8f9fa; border: 1px solid #e1e4e8; border-radius: 8px; padding: 12px; }
+  .hijo-card { border: 1px solid #ddd; border-radius: 8px; padding: 10px; margin-bottom: 10px; }
+  .pill { display: inline-block; padding: 4px 8px; border-radius: 999px; background: #eef; margin-right: 6px; font-size: 12px; }
+  .badge { background: #ffe8e8; color: #a33; border: 1px solid #f5c2c2; padding: 2px 6px; border-radius: 6px; font-size: 12px; }
+  details > summary { cursor: pointer; font-weight: 600; }
+  .list { list-style: none; padding-left: 0; }
+  .list li { margin-bottom: 8px; }
+  .muted { color: #666; font-size: 13px; }
+</style>
+<script>
+function cargarHijos(){
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  const cont = document.getElementById('hijos');
+  const alertasGlobal = document.getElementById('alertas-globales');
+  const resumenGlobal = document.getElementById('resumen-global');
+
+  if(!user || user.rol!=='padre') { goTo('index.html'); return; }
+  const db = loadDB();
+  cont.innerHTML='';
+
+  let totalAlertas = 0;
+  let totalInteracciones = 0;
+  let riesgos = 0;
+
+  user.hijos.forEach(id=>{
+    const hijo = db.usuarios.find(u=>u.id===id);
+    if(hijo){
+      const card = document.createElement('div');
+      card.className = "hijo-card";
+
+      const nombre = document.createElement('h3');
+      nombre.textContent = hijo.nombre;
+
+      const estado = document.createElement('p');
+      const estadoTxt = hijo.estado || "Sin datos";
+      estado.innerHTML = "Estado emocional: <span class='pill'>" + estadoTxt + "</span>";
+
+      const alertas = hijo.alertas || [];
+      totalAlertas += alertas.length;
+      const alertasP = document.createElement('p');
+      alertasP.innerHTML = "Alertas recientes: " + alertas.length + (alertas.length ? " <span class='badge'>Revisar</span>" : "");
+
+      // Última actividad (si existe)
+      const ultima = document.createElement('p');
+      const ts = hijo.ultimaActividad || null;
+      ultima.innerHTML = "Última actividad: " + (ts ? new Date(ts).toLocaleString() : "No disponible");
+
+      // Interacciones (ejemplo simple)
+      const inter = hijo.interacciones || { positivas: 0, negativas: 0 };
+      totalInteracciones += (inter.positivas + inter.negativas);
+      if (inter.negativas > 0) riesgos++;
+
+      const interP = document.createElement('p');
+      interP.textContent = "Interacciones: +" + inter.positivas + " / -" + inter.negativas;
+
+      // Vista rápida de las alertas (máx 3)
+      const listaAlertas = document.createElement('ul');
+      listaAlertas.className = 'list muted';
+      alertas.slice(0,3).forEach(a=>{
+        const li = document.createElement('li');
+        li.textContent = "• " + a.mensaje;
+        listaAlertas.appendChild(li);
+      });
+
+      // Botón para entrar al chat
+      const btnChat = document.createElement('button');
+      btnChat.textContent = "Abrir chat";
+      btnChat.onclick = ()=>{ localStorage.setItem('currentChat', id); goTo('chat.html'); };
+
+      card.appendChild(nombre);
+      card.appendChild(estado);
+      card.appendChild(interP);
+      card.appendChild(alertasP);
+      if(alertas.length) card.appendChild(listaAlertas);
+      card.appendChild(ultima);
+      card.appendChild(btnChat);
+      cont.appendChild(card);
+    }
+  });
+
+  // Resumen global simple
+  resumenGlobal.textContent = "Resumen: " + totalAlertas + " alertas en total, " + totalInteracciones + " interacciones registradas, " + riesgos + " hijos con señales de riesgo.";
+
+  // Alertas globales (ejemplo: si hay más de 3 alertas totales)
+  alertasGlobal.innerHTML = (totalAlertas > 3)
+    ? "Atención: Se han detectado varias alertas. Revisa los chats y conversa con tus hijos."
+    : "Sin alertas importantes por ahora.";
+}
+
+window.onload = cargarHijos;
+</script>
+</head>
+<body>
+<div class="card">
+  <h2>Panel Padre</h2>
+
+  <!-- Resumen y alertas globales -->
+  <div class="section">
+    <h3>Resumen general</h3>
+    <p id="resumen-global" class="muted">Cargando...</p>
+    <p id="alertas-globales" class="muted">Cargando...</p>
+  </div>
+
+  <!-- Hijos -->
+  <div class="section">
+    <h3>Hijos</h3>
+    <div id="hijos"></div>
+  </div>
+
+  <!-- Recursos integrados en la misma página -->
+  <div class="grid">
+    <div class="section">
+      <h3>Artículos sobre prevención de bullying</h3>
+      <details>
+        <summary>Cómo hablar del bullying en casa</summary>
+        <p class="muted">Guía paso a paso para iniciar conversaciones seguras, escuchar activamente y establecer acuerdos de respeto.</p>
+        <ul class="list">
+          <li><strong>Escucha activa:</strong> Deja que tu hijo se exprese sin interrumpir.</li>
+          <li><strong>Valida emociones:</strong> Reconoce lo que siente sin minimizar.</li>
+          <li><strong>Plan de acción:</strong> Definan juntos cómo responder y a quién acudir.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Señales tempranas de riesgo</summary>
+        <ul class="list">
+          <li><strong>Cambios de ánimo:</strong> Irritabilidad, retraimiento.</li>
+          <li><strong>Evitar la escuela:</strong> Excusas frecuentes para no asistir.</li>
+          <li><strong>Disminución del rendimiento:</strong> Bajón repentino en tareas y notas.</li>
+        </ul>
+      </details>
+    </div>
+
+    <div class="section">
+      <h3>Videos educativos (resumen textual)</h3>
+      <details>
+        <summary>Qué es el bullying y cómo identificarlo</summary>
+        <p class="muted">Explicación clara de tipos de bullying (verbal, social, físico, cibernético) y ejemplos cotidianos.</p>
+        <ul class="list">
+          <li><strong>Verbal:</strong> Apodos, burlas, amenazas.</li>
+          <li><strong>Social:</strong> Exclusión, rumores.</li>
+          <li><strong>Físico:</strong> Empujones, golpes.</li>
+          <li><strong>Online:</strong> Hostigamiento en redes, mensajes agresivos.</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Estrategias de respuesta para padres</summary>
+        <ul class="list">
+          <li><strong>Documenta:</strong> Guarda evidencias de incidentes.</li>
+          <li><strong>Coordina:</strong> Comunica a la escuela y acuerda pasos.</li>
+          <li><strong>Acompaña:</strong> Refuerza habilidades sociales y la red de apoyo.</li>
+        </ul>
+      </details>
+    </div>
+
+    <div class="section">
+      <h3>Guía para padres (contenido integrado)</h3>
+      <p class="muted">Un resumen práctico para actuar de forma consistente y protectora:</p>
+      <ul class="list">
+        <li><strong>Normas claras:</strong> En casa, define límites y consecuencias coherentes.</li>
+        <li><strong>Rutinas de revisión:</strong> Conversa semanalmente sobre el entorno escolar y online.</li>
+        <li><strong>Fortalece autoestima:</strong> Refuerza logros y habilidades, no solo resultados.</li>
+        <li><strong>Red de apoyo:</strong> Fomenta amistades saludables y actividades grupales.</li>
+      </ul>
+      <details>
+        <summary>Plan de conversación sugerido</summary>
+        <ul class="list">
+          <li><strong>Apertura:</strong> “¿Cómo te sentiste esta semana en el cole?”</li>
+          <li><strong>Exploración:</strong> “¿Hubo algo que te incomodó o te hizo sentir mal?”</li>
+          <li><strong>Cierre:</strong> “Si pasa algo, estoy contigo y lo resolvemos juntos.”</li>
+        </ul>
+      </details>
+    </div>
+
+    <div class="section">
+      <h3>Consejos rápidos</h3>
+      <ul class="list">
+        <li><strong>Modela respeto:</strong> Los niños aprenden por observación.</li>
+        <li><strong>Refuerza lo positivo:</strong> Señala y celebra conductas de empatía.</li>
+        <li><strong>Tiempo de calidad:</strong> Momentos sin pantallas para conversar.</li>
+        <li><strong>Límites digitales:</strong> Acuerdos claros sobre redes y chats.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Pie del panel -->
+  <div class="section">
+    <button onclick="logout()">Cerrar sesión</button>
+  </div>
+</div>
+</body>
+</html>

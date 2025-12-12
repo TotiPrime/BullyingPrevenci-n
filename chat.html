@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Chat</title>
+<link rel="stylesheet" href="styles/chat.css">
+<script src="scripts/database.js"></script>
+<script src="scripts/navigation.js"></script>
+<script src="scripts/chat.js"></script>
+</head>
+<body>
+<div class="card">
+<h2>Chat</h2>
+<div id="chatBox"></div>
+<input type="text" id="msgInput" placeholder="Escribe un mensaje...">
+<button id="sendBtn" onclick="sendMsg()">Enviar</button>
+<button onclick="goBackPanel()">Volver</button>
+</div>
+<script>mostrarChat();</script>
+</body>
+</html>

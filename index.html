@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Inicio</title>
+<link rel="stylesheet" href="styles/styles.css">
+<link rel="stylesheet" href="styles/chat.css">
+<script src="scripts/auth.js"></script>
+<script src="scripts/navigation.js"></script>
+</head>
+<body>
+
+<div class="container">
+
+
+
+
+    <div class="card animated-card">
+        <div class="logo-container">
+             <img src="img/logo.png" alt="Logo" class="logo-img">
+        </div>
+        <h2 class="title">Sistema de Prevención de Bullying</h2>
+
+        <div class="motivational-box">
+            <p>"Hablar es el primer paso para recibir ayuda."</p>
+            <p>"No permitas que nadie te haga sentir menos. Mereces respeto."</p>
+        </div>
+
+        <div class="button-group">
+            <button class="btn primary" onclick="goTo('login.html')">Iniciar sesión</button>
+            <button class="btn secondary" onclick="goTo('registerPadre.html')">Registrar Padre</button>
+            <button class="btn secondary" onclick="goTo('registerHijo.html')">Registrar Hijo</button>
+        </div>
+
+        <hr class="divider">
+
+        <div class="button-group">
+            <button class="btn info" onclick="openModal('consejosModal')">Consejos</button>
+            <button class="btn info" onclick="openModal('funcionamientoModal')">¿Cómo funciona?</button>
+            <button class="btn info" onclick="openModal('acercaModal')">Acerca del sistema</button>
+
+            <!-- NUEVO: TEST -->
+            <button class="btn info" onclick="openModal('testModal')">Test Rápido</button>
+        </div>
+    </div>
+</div>
+
+<div id="consejosModal" class="modal">
+  <div class="modal-content">
+      <span class="close" onclick="closeModal('consejosModal')">&times;</span>
+      <h2>Consejos importantes</h2>
+      <ul>
+        <li><b>Si eres estudiante:</b> No guardes silencio. Habla con alguien de confianza.</li>
+        <li><b>Si eres padre:</b> Escucha sin juzgar y mantén la calma.</li>
+        <li><b>Si eres docente:</b> Observa cambios de humor o aislamiento.</li>
+        <li><b>Si eres víctima:</b> No es tu culpa. Busca ayuda.</li>
+        <li><b>Si eres testigo:</b> Reportar no es ser “sapo”, es salvar a alguien.</li>
+      </ul>
+  </div>
+</div>
+
+
+<div id="funcionamientoModal" class="modal">
+  <div class="modal-content">
+      <span class="close" onclick="closeModal('funcionamientoModal')">&times;</span>
+      <h2>¿Cómo funciona el sistema?</h2>
+      <p>
+        Nuestra plataforma facilita la comunicación y seguimiento de posibles casos de bullying.
+      </p>
+      <ul>
+        <li><b>Padres:</b> supervisan reportes y conversaciones.</li>
+        <li><b>Estudiantes:</b> reportan incidentes.</li>
+        <li><b>Soporte:</b> atiende casos y da orientación.</li>
+        <li><b>Administrador:</b> gestiona usuarios y estadísticas.</li>
+      </ul>
+  </div>
+</div>
+
+
+
+<div id="acercaModal" class="modal">
+  <div class="modal-content">
+      <span class="close" onclick="closeModal('acercaModal')">&times;</span>
+      <h2>Acerca del Sistema</h2>
+      <p>
+        Este sistema fue creado para prevenir el bullying mediante comunicación constante, 
+        detección temprana y apoyo directo a estudiantes.
+      </p>
+
+      <h3>Tipos de bullying</h3>
+      <ul>
+        <li>Físico</li>
+        <li>Verbal</li>
+        <li>Psicológico</li>
+        <li>Exclusión social</li>
+        <li>Cibernético</li>
+      </ul>
+  </div>
+</div>
+
+
+
+<div id="testModal" class="modal">
+  <div class="modal-content">
+      <span class="close" onclick="closeModal('testModal')">&times;</span>
+
+      <h2>Test Rápido: ¿Hay señales de bullying?</h2>
+      <p>Marca las situaciones que has notado:</p>
+
+      <form id="bullyingTest">
+          <label><input type="checkbox" name="t"> Cambios repentinos en el estado de ánimo.</label><br>
+          <label><input type="checkbox" name="t"> Evita ir a clases o participar.</label><br>
+          <label><input type="checkbox" name="t"> Pérdida o daño de objetos personales.</label><br>
+          <label><input type="checkbox" name="t"> Aislamiento o poca convivencia.</label><br>
+          <label><input type="checkbox" name="t"> Mensajes ofensivos en redes.</label><br>
+          <label><input type="checkbox" name="t"> Nervios o miedo al revisar el celular.</label><br><br>
+
+          <button type="button" class="btn primary" onclick="evaluarTest()">Evaluar</button>
+      </form>
+
+      <p id="resultadoTest" style="margin-top:10px; font-weight:bold;"></p>
+
+  </div>
+</div>
+
+
+<script>
+function openModal(id) {
+  document.getElementById(id).style.display = "flex";
+}
+
+function closeModal(id) {
+  document.getElementById(id).style.display = "none";
+}
+
+function evaluarTest() {
+    let count = document.querySelectorAll('input[name="t"]:checked').length;
+    let result = document.getElementById('resultadoTest');
+
+    if (count === 0) result.innerHTML = "No hay señales claras.";
+    else if (count <= 2) result.innerHTML = "Señales leves. Mantén observación.";
+    else if (count <= 4) result.innerHTML = "Posibles señales de bullying. Habla con la persona.";
+    else result.innerHTML = "ALTO RIESGO. Busca ayuda inmediata.";
+}
+</script>
+
+</body>
+</html>
