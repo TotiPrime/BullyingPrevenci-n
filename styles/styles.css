@@ -1,0 +1,296 @@
+/* ===========================
+   ESTILO GENERAL
+=========================== */
+body {
+    font-family: "Inter", "Segoe UI", Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f2f4f7;
+    color: #1b2430;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Contenedor */
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 25px;
+}
+
+/* ===========================
+   TARJETA PRINCIPAL (General)
+=========================== */
+.card {
+    width: 90%;
+    max-width: 600px;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid #d6d9de;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===========================
+          TÍTULOS
+=========================== */
+.title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #14213d;
+    margin-bottom: 20px;
+}
+
+/* ===========================
+   FRASES MOTIVACIONALES
+=========================== */
+.motivational-box {
+    background: #eef1f6;
+    border-left: 4px solid #304674;
+    padding: 18px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.motivational-box p {
+    margin: 6px 0;
+    font-size: 15px;
+    color: #36435a;
+    font-weight: 500;
+}
+
+/* ===========================
+        BOTONES (General)
+=========================== */
+.button-group {
+    margin-top: 10px;
+}
+
+.btn {
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    margin: 8px;
+    font-size: 15px;
+    transition: 0.25s;
+}
+
+/* Botón principal */
+.btn.primary {
+    background: #1b3b6f;
+    color: #ffffff;
+}
+.btn.primary:hover {
+    background: #142e54;
+}
+
+/* Secundario */
+.btn.secondary {
+    background: #e9eef5;
+    color: #1b3b6f;
+    border: 1px solid #c8d1dd;
+}
+.btn.secondary:hover {
+    background: #dbe3ee;
+}
+
+/* Información */
+.btn.info {
+    background: #2e5a88;
+    color: #fff;
+}
+.btn.info:hover {
+    background: #23476b;
+}
+
+/* Full width button */
+.btn.full {
+    width: 100%;
+}
+
+/* Línea separadora */
+.divider {
+    margin: 25px auto;
+    width: 80%;
+    border: none;
+    border-top: 1px solid #d1d7e0;
+}
+
+/* ===========================
+          MODALES
+=========================== */
+.modal {
+    display: none;
+    position: fixed;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(3px);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 25px;
+    width: 85%;
+    max-width: 540px;
+    border-radius: 12px;
+    border: 1px solid #d6d9de;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.15);
+    animation: modalPop 0.25s ease;
+}
+
+@keyframes modalPop {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+.close {
+    float: right;
+    font-size: 24px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #555;
+}
+.close:hover {
+    color: #000;
+}
+
+.modal-content ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.modal-content li {
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #2a3647;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ===========================
+          TABLAS
+=========================== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+}
+
+th {
+    background: #1b3b6f;
+    color: #fff;
+    padding: 12px;
+    font-weight: 600;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #d6d9de;
+    font-size: 15px;
+}
+
+tr:hover td {
+    background: #f2f5f9;
+}
+
+/* ===========================
+      RESPONSIVE GENERAL
+=========================== */
+@media (max-width: 480px) {
+    .btn {
+        width: 100%;
+    }
+    .card {
+        padding: 25px;
+    }
+}
+
+/* ===========================
+   ESTILO EXTRA PARA LOGIN
+=========================== */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #1b3b6f, #304674);
+}
+
+/* Tarjeta del login */
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    padding: 40px 35px;
+    border-radius: 20px;
+    box-shadow: 0 10px 35px rgba(0,0,0,0.18);
+    animation: fadeIn 0.6s ease;
+}
+
+/* Títulos del login */
+.login-title {
+    font-size: 30px;
+    color: #14213d;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.login-subtitle {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+/* Inputs */
+.input-group {
+    margin-bottom: 18px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid #cfd6e2;
+    background: #f7f9fc;
+    transition: 0.25s ease;
+    font-family: "Inter", sans-serif;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #1b3b6f;
+    background: #ffffff;
+    box-shadow: 0 0 8px rgba(27, 59, 111, 0.25);
+}
+
+/* Logo opcional */
+.logo-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.logo-img {
+    max-width: 120px;
+    width: 100%;
+    height: auto;
+}
